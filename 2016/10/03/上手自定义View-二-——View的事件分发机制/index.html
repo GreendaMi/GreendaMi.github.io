@@ -15,28 +15,16 @@
 
 
 
-<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;今天来说一说View的事件分发机制。
-
-
-&amp;#160; &amp;#160; &amp;#160; &amp;#160;一个完整的事件是从手指接触到屏幕开始，手指离开屏幕结束。即以down事件开始，然后可能是若干个move事件，最后是up。
-&amp;#160; &amp;#160; &amp;#160; &amp;#160;首先，一个事件是这样传递的：Activity-&amp;gt;Window(Pho">
+<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;今天来说说View的事件分发机制，其实这个问题也困扰了我很久，今天终于找了个事件，和大家一起把这里理顺！">
 <meta property="og:type" content="article">
 <meta property="og:title" content="上手自定义View(二)——View的事件分发机制">
 <meta property="og:url" content="http://greendami.top/2016/10/03/上手自定义View-二-——View的事件分发机制/index.html">
 <meta property="og:site_name" content="GreendaMi'Blog">
-<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;今天来说一说View的事件分发机制。
-
-
-&amp;#160; &amp;#160; &amp;#160; &amp;#160;一个完整的事件是从手指接触到屏幕开始，手指离开屏幕结束。即以down事件开始，然后可能是若干个move事件，最后是up。
-&amp;#160; &amp;#160; &amp;#160; &amp;#160;首先，一个事件是这样传递的：Activity-&amp;gt;Window(Pho">
-<meta property="og:updated_time" content="2016-10-03T01:21:56.395Z">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;今天来说说View的事件分发机制，其实这个问题也困扰了我很久，今天终于找了个事件，和大家一起把这里理顺！">
+<meta property="og:updated_time" content="2016-10-03T01:41:35.026Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="上手自定义View(二)——View的事件分发机制">
-<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;今天来说一说View的事件分发机制。
-
-
-&amp;#160; &amp;#160; &amp;#160; &amp;#160;一个完整的事件是从手指接触到屏幕开始，手指离开屏幕结束。即以down事件开始，然后可能是若干个move事件，最后是up。
-&amp;#160; &amp;#160; &amp;#160; &amp;#160;首先，一个事件是这样传递的：Activity-&amp;gt;Window(Pho">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;今天来说说View的事件分发机制，其实这个问题也困扰了我很久，今天终于找了个事件，和大家一起把这里理顺！">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -322,8 +310,9 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;今天来说一说View的事件分发机制。</excerpt></p>
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;今天来说说View的事件分发机制，其实这个问题也困扰了我很久，今天终于找了个事件，和大家一起把这里理顺！<a id="more"></a></excerpt></p>
 <the rest="" of="" contents="" |="" 余下全文="">
+
 
 <p>&#160; &#160; &#160; &#160;一个完整的事件是从手指接触到屏幕开始，手指离开屏幕结束。即以down事件开始，然后可能是若干个move事件，最后是up。</p>
 <p>&#160; &#160; &#160; &#160;首先，一个事件是这样传递的：Activity-&gt;Window(PhoneWindow)-&gt;View。其中View中的事件传递机制如下：ViewGroup-&gt;View-&gt;子View。如果一个子View没有处理收到的事件（onTouchEvent返回false），那么这个事件会交给它的上级处理。如果所有元素都不处理这个事件，那么最后出手的会是Activity的onTouchEvent。</p>
@@ -362,7 +351,7 @@
         <p><span>本文标题:</span><a href="/2016/10/03/上手自定义View-二-——View的事件分发机制/">上手自定义View(二)——View的事件分发机制</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
         <p><span>发布时间:</span>2016-10-03, 07:17:17</p>
-        <p><span>最后更新:</span>2016-10-03, 09:21:56</p>
+        <p><span>最后更新:</span>2016-10-03, 09:41:35</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/03/上手自定义View-二-——View的事件分发机制/" title="上手自定义View(二)——View的事件分发机制">http://greendami.top/2016/10/03/上手自定义View-二-——View的事件分发机制/</a>
             <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/10/03/上手自定义View-二-——View的事件分发机制/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
