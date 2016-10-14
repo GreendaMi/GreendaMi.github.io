@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="GreendaMi" />
+
+
+
+<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android鬼点子-使用Espresso进行UI测试">
+<meta property="og:url" content="http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/index.html">
+<meta property="og:site_name" content="GreendaMi'Blog">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。">
+<meta property="og:image" content="http://google.github.io/android-testing-support-library/assets/espresso-cheat-sheet-2.1.0.png">
+<meta property="og:updated_time" content="2016-10-14T14:40:03.139Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android鬼点子-使用Espresso进行UI测试">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。">
+<meta name="twitter:image" content="http://google.github.io/android-testing-support-library/assets/espresso-cheat-sheet-2.1.0.png">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="GreendaMi&#39;Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Android鬼点子-使用Espresso进行UI测试 | GreendaMi&#39;Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?527c4de09cdacdf459cc67b40f582764";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/IMG_0033.JPG" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">GreendaMi</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">用心做事，开心做人</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">在修炼Android的道路上走火入魔</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">GreendaMi</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/IMG_0033.JPG" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">GreendaMi</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">用心做事，开心做人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android鬼点子-使用Espresso进行UI测试" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/" class="article-date">
+      <time datetime="2016-10-14T13:27:25.000Z" itemprop="datePublished">2016-10-14</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android鬼点子-使用Espresso进行UI测试
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。<a id="more"></a></excerpt></p>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<p>&#160; &#160; &#160; &#160;Espresso的代码在包名下androidTest,(多说一句，这里还有一个叫做test的包，这个包下面是进行Junit测试)。说一说这两种测试的不同，Junit的更偏向于测试逻辑，不运行在模拟器中；Espresso是测试UI，比如点击按钮后TextView显示的内容是否正确。Espresso是运行在模拟器中的。</p>
+<pre><code>Espresso测试是非常容易实现的，它由三部分组成： 
+    ViewMachers：寻找用来测试的View。 
+    ViewActions：发送交互事件。 
+    ViewAssertions：检验测试结果。
+</code></pre><p>&#160; &#160; &#160; &#160;在包名下androidTest，默认创建ExampleInstrumentedTest.java。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.support.test.InstrumentationRegistry;</div><div class="line"><span class="keyword">import</span> android.support.test.runner.AndroidJUnit4;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> junit.framework.Assert.assertEquals;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Instrumentation test, which will execute on an Android device.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@see</span> &lt;a href="http://d.android.com/tools/testing"&gt;Testing documentation&lt;/a&gt;</div><div class="line"> */</div><div class="line"><span class="meta">@RunWith</span>(AndroidJUnit4.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleInstrumentedTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">useAppContext</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// Context of the app under test.</span></div><div class="line">        Context appContext = InstrumentationRegistry.getTargetContext();</div><div class="line"></div><div class="line">        assertEquals(<span class="string">"com.example.test"</span>, appContext.getPackageName());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>&#160; &#160; &#160; &#160;我们发现这里使用了assertEquals断言，所以Espresso是建立在Junit基础上的。在gradle配置如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</div><div class="line">    androidTestCompile(&apos;com.android.support.test.espresso:espresso-core:2.2.2&apos;, &#123;</div><div class="line">        exclude group: &apos;com.android.support&apos;, module: &apos;support-annotations&apos;</div><div class="line">    &#125;)</div><div class="line">    compile &apos;com.android.support:appcompat-v7:23.4.0&apos;</div><div class="line">    testCompile &apos;junit:junit:4.12&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>基本的使用方法：<br><strong>onView(ViewMatcher).perform(ViewAction).check(ViewAssertion);</strong></p>
+<p>下面的方法适用于使用Adapter的View。<br><strong>onData(ObjectMatcher).DataOptions.perform(ViewAction).check(ViewAssertion);</strong></p>
+<blockquote>
+<p>1、寻找测试元素（Matcher）</p>
+</blockquote>
+<p>&#160; &#160; &#160; &#160;Espresso提供了一个onView()方法用来寻找UI上指定的元素.onView的输入参数是一个Matcher对象，有很多方法都会返回这个对象，我们可以把这些方法理解为寻找测试View的规则。</p>
+<pre><code>withId()使用控件的ID进行查找
+withText()使用控件上的Text属性的值进行查找
+还有withHint(),withTagKey()等等
+</code></pre><blockquote>
+<p>2、进行操作（ViewAction）</p>
+</blockquote>
+<p>&#160; &#160; &#160; &#160;比如点击，双击，长按等等，当然这个步奏不是必须的。perform()里面可以传进驱若干个参数，也就是若干个动作，这些动作会依次执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">onView(withId(id)).perform(click(), clearText(), closeSoftKeyboard())</div></pre></td></tr></table></figure>
+<blockquote>
+<p>3、检测结果（ViewAssertion）</p>
+</blockquote>
+<p>&#160; &#160; &#160; &#160;最后查看结果，例如：matches(Matcher)，isAbove(Matcher)等等。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">onView(withText(<span class="string">"Hello world!"</span>)).check(matches(isDisplayed()));</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;附上一个网上别人写的例子<a href="http://blog.csdn.net/weijianfeng1990912/article/details/51540468" target="_blank" rel="external">地址</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@RunWith</span>(AndroidJUnit4.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginActivityTest</span></span>&#123;</div><div class="line">    <span class="meta">@Rule</span></div><div class="line">    <span class="comment">//注解定义规则</span></div><div class="line">    <span class="keyword">public</span> ActivityTestRule&lt;LoginActivity&gt; mActivityRule = <span class="keyword">new</span> ActivityTestRule&lt;&gt;(</div><div class="line">            LoginActivity.class);</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="comment">//测试用例</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//清除 之前输入点用户名和密码</span></div><div class="line">        onView(withId(R.id.login_et_username)).perform(clearText());</div><div class="line">        onView(withId(R.id.login_et_password)).perform(clearText());</div><div class="line">        <span class="comment">//输入用户名和密码并关闭软键盘</span></div><div class="line">        onView(withId(R.id.login_et_username)).perform(typeText(<span class="string">"18500000000\n"</span>), closeSoftKeyboard());</div><div class="line">        onView(withId(R.id.login_et_password)).perform(typeText(<span class="string">"wjf"</span>),closeSoftKeyboard());</div><div class="line">       <span class="comment">//触发登录按钮的点击事件</span></div><div class="line">        onView(withId(R.id.login_fa_login)).perform(click());</div><div class="line">       <span class="comment">//通过断言判断是否登录成功，这里通过会话列表是否显示来判断</span></div><div class="line">        onView(withId(R.id.list_fl_list)).check(ViewAssertions.matches(isDisplayed()));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;当你的View是使用Adapter的时候，可能显示在画面上的并不是整个View，实际上并没有加载整个View。这里就要使用onData()了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//如果使用的是 SimpleAdapter，那么data的类型就Map型，如下：</span></div><div class="line">Map:&#123;<span class="string">"STR"</span> : <span class="string">"item: 50"</span>, <span class="string">"LEN"</span>: <span class="number">7</span>&#125;</div><div class="line"><span class="comment">//模拟一个点击显示内容是"item: 50"的item。</span></div><div class="line">onData(allOf(is(instanceOf(Map.class)), hasEntry(equalTo(<span class="string">"STR"</span>), is(<span class="string">"item: 50"</span>)))</div><div class="line">  .perform(click());</div><div class="line"></div><div class="line">onData(withItemContent(<span class="string">"item: 60"</span>))</div><div class="line">  .onChildView(withId(R.id.item_size))</div><div class="line">  .perform(click());</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;edittext 中 搜狗输入法输入的 内容，在自动化之行过程中，可能出现输入不全的问题，可换用系统自带输入法，或者谷歌原生输入法。<br>当有多个edittext 时候，可能出现第一个edittext 输入完之后，第二个输入无反应，可以在typeText（）中的字符后面加上 “\n” 尝试解决。 <a href="https://google.github.io/android-testing-support-library/" target="_blank" rel="external">谷歌官方文档</a></p>
+<p>最后一张图可以总结我上面的废话：<br><img src="http://google.github.io/android-testing-support-library/assets/espresso-cheat-sheet-2.1.0.png" alt="espresso-cheat-sheet-2.1.0"></p>
+</the>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">Android鬼点子-使用Espresso进行UI测试</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
+        <p><span>发布时间:</span>2016-10-14, 21:27:25</p>
+        <p><span>最后更新:</span>2016-10-14, 22:40:03</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/" title="Android鬼点子-使用Espresso进行UI测试">http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/">
+                    Android鬼点子-使用ViewStub进行延迟加载
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Android鬼点子-使用Espresso进行UI测试　| GreendaMi'Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/14/Android鬼点子-使用Espresso进行UI测试/" data-title="Android鬼点子-使用Espresso进行UI测试" data-url="http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"http://greendami.duoshuo.com"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/" title="下一篇: Android鬼点子-使用ViewStub进行延迟加载">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">Android鬼点子-使用Espresso进行UI测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/">Android鬼点子-使用ViewStub进行延迟加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/上手自定义View-二-——View的事件分发机制/">上手自定义View(二)——View的事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/上手自定义View(1)/">上手自定义View(一)</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 GreendaMi
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
