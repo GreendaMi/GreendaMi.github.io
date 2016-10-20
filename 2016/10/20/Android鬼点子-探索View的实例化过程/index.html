@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="GreendaMi" />
+
+
+
+<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;本文主要介绍了一个View如何被实例化的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android鬼点子-探索View的实例化过程">
+<meta property="og:url" content="http://greendami.top/2016/10/20/Android鬼点子-探索View的实例化过程/index.html">
+<meta property="og:site_name" content="GreendaMi'Blog">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;本文主要介绍了一个View如何被实例化的。">
+<meta property="og:updated_time" content="2016-10-20T04:39:41.753Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android鬼点子-探索View的实例化过程">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;本文主要介绍了一个View如何被实例化的。">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="GreendaMi&#39;Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/touxiang.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Android鬼点子-探索View的实例化过程 | GreendaMi&#39;Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?527c4de09cdacdf459cc67b40f582764";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/touxiang.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">GreendaMi</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">用心做事，开心做人</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">在修炼Android的道路上走火入魔</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">GreendaMi</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/touxiang.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">GreendaMi</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">用心做事，开心做人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android鬼点子-探索View的实例化过程" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/10/20/Android鬼点子-探索View的实例化过程/" class="article-date">
+      <time datetime="2016-10-20T02:32:00.000Z" itemprop="datePublished">2016-10-20</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android鬼点子-探索View的实例化过程
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;本文主要介绍了一个View如何被实例化的。<a id="more"></a></excerpt></p>
+<p><the rest="" of="" contents="" |="" 余下全文=""><br>&#160; &#160; &#160; &#160;在一个Activity中，我们通常使用setContentView(R.layout.XX);或者setContentView(mView);来设置一个布局。</the></p>
+<p>&#160; &#160; &#160; &#160;咱们来先说说第一种，从一个xml布局文件来给Activity设置布局。这个方法是在PhoneWindow类里面实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(<span class="keyword">int</span> layoutResID)</span> </span>&#123;</div><div class="line">    <span class="comment">// Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window</span></div><div class="line">    <span class="comment">// decor, when theme attributes and the like are crystalized. Do not check the feature</span></div><div class="line">    <span class="comment">// before this happens.</span></div><div class="line">    <span class="keyword">if</span> (mContentParent == <span class="keyword">null</span>) &#123;</div><div class="line">        installDecor();</div><div class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</div><div class="line">        mContentParent.removeAllViews();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</div><div class="line">        <span class="keyword">final</span> Scene newScene = Scene.getSceneForLayout(mContentParent, layoutResID,</div><div class="line">                getContext());</div><div class="line">        transitionTo(newScene);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        mLayoutInflater.inflate(layoutResID, mContentParent);</div><div class="line">    &#125;</div><div class="line">    mContentParent.requestApplyInsets();</div><div class="line">    <span class="keyword">final</span> Callback cb = getCallback();</div><div class="line">    <span class="keyword">if</span> (cb != <span class="keyword">null</span> &amp;&amp; !isDestroyed()) &#123;</div><div class="line">        cb.onContentChanged();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;首先判断父容器是不是空，如果是空的生成Decor；如果不是空的就清空。Decor是页面的顶层容器，它包含一个子容器t。这个子容器里有两个FrameLayout子元素，分别是标题栏和内容栏，这里的内容栏就是setContentView()方法载入的布局界面。</p>
+<p>&#160; &#160; &#160; &#160;如果是第二种setContentView(View view)<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">        setContentView(view, <span class="keyword">new</span> ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view, ViewGroup.LayoutParams params)</span> </span>&#123;</div><div class="line">        <span class="comment">// Note: FEATURE_CONTENT_TRANSITIONS may be set in the process of installing the window</span></div><div class="line">        <span class="comment">// decor, when theme attributes and the like are crystalized. Do not check the feature</span></div><div class="line">        <span class="comment">// before this happens.</span></div><div class="line">        <span class="keyword">if</span> (mContentParent == <span class="keyword">null</span>) &#123;</div><div class="line">            installDecor();</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</div><div class="line">            mContentParent.removeAllViews();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (hasFeature(FEATURE_CONTENT_TRANSITIONS)) &#123;</div><div class="line">            view.setLayoutParams(params);</div><div class="line">            <span class="keyword">final</span> Scene newScene = <span class="keyword">new</span> Scene(mContentParent, view);</div><div class="line">            transitionTo(newScene);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mContentParent.addView(view, params);</div><div class="line">        &#125;</div><div class="line">        mContentParent.requestApplyInsets();</div><div class="line">        <span class="keyword">final</span> Callback cb = getCallback();</div><div class="line">        <span class="keyword">if</span> (cb != <span class="keyword">null</span> &amp;&amp; !isDestroyed()) &#123;</div><div class="line">            cb.onContentChanged();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>&#160; &#160; &#160; &#160;前面的和第一种的逻辑类似。然后判断是不是有过场动画，如果有生成一个Scene，如果没有直接生成一个View。Scene保存了view层级的状态，并保存了层级中所有view的属性值。然后在transitionTo(newScene);中会对View进行初始化。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">transitionTo</span><span class="params">(Scene scene)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mContentScene == <span class="keyword">null</span>) &#123;</div><div class="line">            scene.enter();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mTransitionManager.transitionTo(scene);</div><div class="line">        &#125;</div><div class="line">        mContentScene = scene;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">enter</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// Apply layout change, if any</span></div><div class="line">    <span class="keyword">if</span> (mLayoutId &gt; <span class="number">0</span> || mLayout != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="comment">// empty out parent container before adding to it</span></div><div class="line">        getSceneRoot().removeAllViews();</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (mLayoutId &gt; <span class="number">0</span>) &#123;</div><div class="line">            LayoutInflater.from(mContext).inflate(mLayoutId, mSceneRoot);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            mSceneRoot.addView(mLayout);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// Notify next scene that it is entering. Subclasses may override to configure scene.</span></div><div class="line">    <span class="keyword">if</span> (mEnterAction != <span class="keyword">null</span>) &#123;</div><div class="line">        mEnterAction.run();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    setCurrentScene(mSceneRoot, <span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;在scene.enter()判断了是直接传入了一个View还是一个LayoutID，如果是LayoutID，这里最后还是走到了LayoutInflater.inflate()如果没有过场动画，这里还是用LayoutInflater.inflate()实例化一个View，然后把这个View加入父布局中。下面来具体说说LayoutInflater.inflate()。</p>
+<hr>
+<p>获取LayoutInflater的方法有如下三种:</p>
+<pre><code>LayoutInflater inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+LayoutInflater inflater = LayoutInflater.from(context); (该方法实质就是第一种方法，可参考源代码)
+
+LayoutInflater inflater = getLayoutInflater();（在Activity中可以使用，实际上是View子类下window的一个函数）
+</code></pre><hr>
+<p>我们最常用的便是LayoutInflater的inflate方法，这个方法重载了四种调用方式，分别为：</p>
+<pre><code>public View inflate(int resource, ViewGroup root)
+
+public View inflate(int resource, ViewGroup root, boolean attachToRoot)
+
+public View inflate(XmlPullParser parser, ViewGroup root) 
+    注：XmlPullParser是final XmlResourceParser parser = res.getLayout(resource);
+
+public View inflate(XmlPullParser parser, ViewGroup root, boolean attachToRoot)
+</code></pre><p>inflate方法有三个参数，分别是</p>
+<p>1.resource 布局的资源id</p>
+<p>2.root 填充的根视图</p>
+<p>3.attachToRoot 是否将载入的视图绑定到根视图中</p>
+<hr>
+<p>&#160; &#160; &#160; &#160;那么attachToRoot是什么作用呢？ 他会自动把layout加到View hierarchy中， 不需要手动调用root.addView。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> View <span class="title">inflate</span><span class="params">(XmlPullParser parser, @Nullable ViewGroup root, <span class="keyword">boolean</span> attachToRoot)</span> </span>&#123;</div><div class="line">        <span class="keyword">synchronized</span> (mConstructorArgs) &#123;</div><div class="line">            Trace.traceBegin(Trace.TRACE_TAG_VIEW, <span class="string">"inflate"</span>);</div><div class="line"></div><div class="line">            <span class="keyword">final</span> Context inflaterContext = mContext;</div><div class="line">            <span class="keyword">final</span> AttributeSet attrs = Xml.asAttributeSet(parser);</div><div class="line">            Context lastContext = (Context) mConstructorArgs[<span class="number">0</span>];</div><div class="line">            mConstructorArgs[<span class="number">0</span>] = inflaterContext;</div><div class="line">            View result = root;</div><div class="line"></div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                <span class="comment">// Look for the root node.</span></div><div class="line">                <span class="keyword">int</span> type;</div><div class="line">                <span class="keyword">while</span> ((type = parser.next()) != XmlPullParser.START_TAG &amp;&amp;</div><div class="line">                        type != XmlPullParser.END_DOCUMENT) &#123;</div><div class="line">                    <span class="comment">// Empty</span></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (type != XmlPullParser.START_TAG) &#123;</div><div class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> InflateException(parser.getPositionDescription()</div><div class="line">                            + <span class="string">": No start tag found!"</span>);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">final</span> String name = parser.getName();</div><div class="line">                </div><div class="line">                <span class="keyword">if</span> (DEBUG) &#123;</div><div class="line">                    System.out.println(<span class="string">"**************************"</span>);</div><div class="line">                    System.out.println(<span class="string">"Creating root view: "</span></div><div class="line">                            + name);</div><div class="line">                    System.out.println(<span class="string">"**************************"</span>);</div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (TAG_MERGE.equals(name)) &#123;</div><div class="line">                    <span class="keyword">if</span> (root == <span class="keyword">null</span> || !attachToRoot) &#123;</div><div class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> InflateException(<span class="string">"&lt;merge /&gt; can be used only with a valid "</span></div><div class="line">                                + <span class="string">"ViewGroup root and attachToRoot=true"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    rInflate(parser, root, inflaterContext, attrs, <span class="keyword">false</span>);</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="comment">// Temp is the root view that was found in the xml</span></div><div class="line">                    <span class="keyword">final</span> View temp = createViewFromTag(root, name, inflaterContext, attrs);</div><div class="line"></div><div class="line">                    ViewGroup.LayoutParams params = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> (root != <span class="keyword">null</span>) &#123;</div><div class="line">                        <span class="keyword">if</span> (DEBUG) &#123;</div><div class="line">                            System.out.println(<span class="string">"Creating params from root: "</span> +</div><div class="line">                                    root);</div><div class="line">                        &#125;</div><div class="line">                        <span class="comment">// Create layout params that match root, if supplied</span></div><div class="line">                        params = root.generateLayoutParams(attrs);</div><div class="line">                        <span class="keyword">if</span> (!attachToRoot) &#123;</div><div class="line">                            <span class="comment">// Set the layout params for temp if we are not</span></div><div class="line">                            <span class="comment">// attaching. (If we are, we use addView, below)</span></div><div class="line">                            temp.setLayoutParams(params);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> (DEBUG) &#123;</div><div class="line">                        System.out.println(<span class="string">"-----&gt; start inflating children"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="comment">// Inflate all children under temp against its context.</span></div><div class="line">                    rInflateChildren(parser, temp, attrs, <span class="keyword">true</span>);</div><div class="line"></div><div class="line">                    <span class="keyword">if</span> (DEBUG) &#123;</div><div class="line">                        System.out.println(<span class="string">"-----&gt; done inflating children"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="comment">// We are supposed to attach all the views we found (int temp)</span></div><div class="line">                    <span class="comment">// to root. Do that now.</span></div><div class="line">                    <span class="keyword">if</span> (root != <span class="keyword">null</span> &amp;&amp; attachToRoot) &#123;</div><div class="line">                        root.addView(temp, params);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="comment">// Decide whether to return the root that was passed in or the</span></div><div class="line">                    <span class="comment">// top view found in xml.</span></div><div class="line">                    <span class="keyword">if</span> (root == <span class="keyword">null</span> || !attachToRoot) &#123;</div><div class="line">                        result = temp;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line"></div><div class="line">            &#125; <span class="keyword">catch</span> (XmlPullParserException e) &#123;</div><div class="line">                InflateException ex = <span class="keyword">new</span> InflateException(e.getMessage());</div><div class="line">                ex.initCause(e);</div><div class="line">                <span class="keyword">throw</span> ex;</div><div class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">                InflateException ex = <span class="keyword">new</span> InflateException(</div><div class="line">                        parser.getPositionDescription()</div><div class="line">                                + <span class="string">": "</span> + e.getMessage());</div><div class="line">                ex.initCause(e);</div><div class="line">                <span class="keyword">throw</span> ex;</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                <span class="comment">// Don't retain static reference on context.</span></div><div class="line">                mConstructorArgs[<span class="number">0</span>] = lastContext;</div><div class="line">                mConstructorArgs[<span class="number">1</span>] = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            Trace.traceEnd(Trace.TRACE_TAG_VIEW);</div><div class="line"></div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;其中下面的代码说明会了attachToRoot的作用，分别是是否add进root和返回的是传入的root还是使用LayoutID实例化的tempView。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (root != <span class="keyword">null</span> &amp;&amp; attachToRoot) &#123;</div><div class="line">     root.addView(temp, params);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Decide whether to return the root that was passed in or the</span></div><div class="line"><span class="comment">// top view found in xml.</span></div><div class="line"><span class="keyword">if</span> (root == <span class="keyword">null</span> || !attachToRoot) &#123;</div><div class="line">     result = temp;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>&#160; &#160; &#160; &#160;注意在Adapter.getView里面不用手动调用root.addView是因为Adapter已经帮我们做了，所以实例化的时候要设置attachToRoot=false。</p>
+<p>&#160; &#160; &#160; &#160;LayoutInflater其实就是使用Android提供的pull解析方式来解析布局文件的。里面调用了createViewFromTag()这个方法，并把节点名和参数传了进去。它是用于根据节点名来创建View对象的。在createViewFromTag()方法的内部又会去调用createView()方法，然后使用反射的方式创建出View的实例并返回。只是创建出了一个根布局的实例而已，接下来会调用rInflate()方法来循环遍历这个根布局下的子元素。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/10/20/Android鬼点子-探索View的实例化过程/">Android鬼点子-探索View的实例化过程</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
+        <p><span>发布时间:</span>2016-10-20, 10:32:00</p>
+        <p><span>最后更新:</span>2016-10-20, 12:39:41</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/10/20/Android鬼点子-探索View的实例化过程/" title="Android鬼点子-探索View的实例化过程">http://greendami.top/2016/10/20/Android鬼点子-探索View的实例化过程/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/10/20/Android鬼点子-探索View的实例化过程/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">
+                    Android鬼点子-使用Espresso进行UI测试
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Android鬼点子-探索View的实例化过程　| GreendaMi'Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/20/Android鬼点子-探索View的实例化过程/" data-title="Android鬼点子-探索View的实例化过程" data-url="http://greendami.top/2016/10/20/Android鬼点子-探索View的实例化过程/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"http://greendami.duoshuo.com"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/" title="下一篇: Android鬼点子-使用Espresso进行UI测试">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/10/20/Android鬼点子-探索View的实例化过程/">Android鬼点子-探索View的实例化过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">Android鬼点子-使用Espresso进行UI测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/">Android鬼点子-使用ViewStub进行延迟加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/上手自定义View-二-——View的事件分发机制/">上手自定义View(二)——View的事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/上手自定义View(1)/">上手自定义View(一)</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 GreendaMi
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
