@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，，以显式调用为主。">
+<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，以显式调用为主。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android鬼点子-Activity的隐式调用">
 <meta property="og:url" content="http://greendami.top/2016/10/31/Android鬼点子-Activity的隐式调用/index.html">
 <meta property="og:site_name" content="GreendaMi'Blog">
-<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，，以显式调用为主。">
-<meta property="og:updated_time" content="2016-10-31T08:55:49.113Z">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，以显式调用为主。">
+<meta property="og:updated_time" content="2016-10-31T09:01:08.830Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android鬼点子-Activity的隐式调用">
-<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，，以显式调用为主。">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，以显式调用为主。">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -310,7 +310,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，，以显式调用为主。<a id="more"></a></excerpt></p>
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;启动一个Activity分为两种方式，分别是显式调用另一种是隐式调用。显式调用很简单，这里主要介绍一下隐式调用。一个Intent原则上只能是显式或者隐式，当它同时是显式和隐式的时候，以显式调用为主。<a id="more"></a></excerpt></p>
 <the rest="" of="" contents="" |="" 余下全文="">
 
 <p>&#160; &#160; &#160; &#160;隐式调用时Intent通过匹配IntentFilter里面所设置的信息找到需要启动的Activity、Service和BroadcastReceiver。如果不匹配，则无法启动。</p>
@@ -318,14 +318,14 @@
 <p>&#160; &#160; &#160; &#160;首先说说action。下面是微博接入文档中的一段配置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">在进行微博分享前，需要在AndroidManifest.xml中，在需要接收消息的Activity（唤起微博主程序的类）里声明对应的Action：ACTION_SDK_REQ_ACTIVITY，如下所示：</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">activity</span></span></div><div class="line">    <span class="attr">android:name</span>=<span class="string">"com.sina.weibo.sdk.demo.WBShareActivity"</span></div><div class="line">    <span class="attr">android:configChanges</span>=<span class="string">"keyboardHidden|orientation"</span></div><div class="line">    <span class="attr">android:screenOrientation</span>=<span class="string">"portrait"</span> &gt;</div><div class="line">    <span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></div><div class="line">    		<span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY"</span> /&gt;</span></div><div class="line">    		<span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.DEFAULT"</span> /&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">activity</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>这里的有一个action的配置：com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY，当你的app启动微博分享消息返回之后，微博就是通过这个action配置的字符串信息，来找到你的app需要启动的Activity，并且启动它。<br><strong>注意intent-filter中可以有多个action标签，Intent只要匹配上众多标签中的一个，就算action匹配上。还有action是大小写敏感的。</strong>Intent中是必须有一个action的。 Intent intent = new Intent(“com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY”);</p>
-<p>&#160; &#160; &#160; &#160;首先说说category。首先，Intent中，category不是必须的。如果没有手动加category信息的话，系统会默认在startActivity的时候加上android.intent.category.DEFAULT。所以在上面的示例中需要加上这个category。category要求Intent中如果含有category，那么所有的category都必须和过滤规则中的其中一个category相同。也就是说，Intent中如果出现了category，不管有几个category，对于每个category来说，它必须是过滤规则中的定义了的category。我们可以通过addCategory方法为Intent添加category。</p>
+<p>&#160; &#160; &#160; &#160;然后说说category。首先，Intent中，category不是必须的。如果没有手动加category信息的话，系统会默认在startActivity的时候加上android.intent.category.DEFAULT。所以在上面的示例中需要加上这个category。category要求Intent中如果含有category，那么所有的category都必须和过滤规则中的其中一个category相同。也就是说，Intent中如果出现了category，不管有几个category，对于每个category来说，它必须是过滤规则中的定义了的category。我们可以通过addCategory方法为Intent添加category。</p>
 <p>&#160; &#160; &#160; &#160;最后是data。Intent中必须有data数据,Intent中的data必须和过滤规则中的某一个data完全匹配,过滤规则中可以有多个data存在，但是Intent中的data只需匹配其中的任意一个data即可。过滤规则中可以没有指定URI，但是系统会赋予其默认值：content和file，这一点在Intent中需要注意。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">"string"</span></span></div><div class="line">      <span class="attr">android:host</span>=<span class="string">"string"</span></div><div class="line">      <span class="attr">android:port</span>=<span class="string">"80"</span></div><div class="line">      <span class="attr">android:path</span>=<span class="string">"/string"</span></div><div class="line">      <span class="attr">android:pathPattern</span>=<span class="string">"string"</span></div><div class="line">      <span class="attr">android:pathPrefix</span>=<span class="string">"/string"</span></div><div class="line">      <span class="attr">android:mimeType</span>=<span class="string">"text/plain"</span></div><div class="line">      /&gt;</div></pre></td></tr></table></figure>
 <p>android:scheme、android:host、android:port、android:path、android:mimeType<br>data的前四个属性构成了URI的组成部分，mimeType设置了数据的类型，比如：image/jpeg。</p>
 <p><strong>data元素组成的URI模型如下：scheme://host:port/path</strong></p>
 <p>如果要指定data信息。要使用setDataAndType方法，不能使用setData或者setType方法，因为这两个方法会清除彼此的数据。</p>
 <p>下面干货儿：<br>action有多个的时候，只要其中之一能够匹配成功即可，但是Intent中一旦设置多个catrgory，那么每个category都必须能够和过滤条件中的某个category匹配成功。对没错！这里说的是过滤条件中的<strong>某个</strong>，我翻遍了网上所有的资料，都是说的<strong>一个</strong>！！！我觉得这里逻辑上有问题，所以Intent中最好还是不要尝试多个catrgory吧。</p>
-<p>对了，如果找到了多个匹配上的activity怎么办？到底驱动哪一个？系统会弹出选择框，让你自己选！！！</p>
+<p>对了，如果找到了多个匹配上的activity怎么办？到底启动哪一个？系统会弹出选择框，让你自己选！！！系统提供了resolveActivity方法来可以让你实现尝试取到所有匹配的Activity，以防没有匹配就直接启动，系统报错</p>
 </the>
       
     </div>
@@ -337,7 +337,7 @@
         <p><span>本文标题:</span><a href="/2016/10/31/Android鬼点子-Activity的隐式调用/">Android鬼点子-Activity的隐式调用</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
         <p><span>发布时间:</span>2016-10-31, 15:46:46</p>
-        <p><span>最后更新:</span>2016-10-31, 16:55:49</p>
+        <p><span>最后更新:</span>2016-10-31, 17:01:08</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/10/31/Android鬼点子-Activity的隐式调用/" title="Android鬼点子-Activity的隐式调用">http://greendami.top/2016/10/31/Android鬼点子-Activity的隐式调用/</a>
             <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/10/31/Android鬼点子-Activity的隐式调用/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
