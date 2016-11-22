@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://greendami.top/2016/11/22/Android鬼点子-代码混淆/index.html">
 <meta property="og:site_name" content="GreendaMi'Blog">
 <meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;给App打包真是一个愉快又痛苦的过程，其中代码混淆就是痛中之痛啊，特别是各种依赖很多的时候，加之Android Studio 2.0之后，各种检查更加严格。这篇就是我的入坑指南。">
-<meta property="og:updated_time" content="2016-11-22T04:29:26.443Z">
+<meta property="og:updated_time" content="2016-11-22T14:50:01.144Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android鬼点子-代码混淆">
 <meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;给App打包真是一个愉快又痛苦的过程，其中代码混淆就是痛中之痛啊，特别是各种依赖很多的时候，加之Android Studio 2.0之后，各种检查更加严格。这篇就是我的入坑指南。">
@@ -381,6 +381,7 @@ proguard.config=proguard.cfg
 }
 </code></pre><p><strong><em>3、判断是否需要混淆</em></strong></p>
 <p>&#160; &#160; &#160; &#160;混淆可以一定程度上保护代码，防止被阅读，但是不会防止被反编译。可以减小APK的大小。混淆主要是把类名，方法明，变量名使用一些没有语义的字母进行替换（字符串变量的内容是不会被混淆的）。一般情况下，JNI，或者使用反射的地方不可以被混淆（使用到类名,方法名），GSON的序列化与反序列化，枚举，Constants等。如果使用的第三方的依赖已经被混淆过，就不可以再被混淆。</p>
+<p>&#160; &#160; &#160; &#160;使用EventBus,有Subscriber的类。使用butterknife，用到注解的地方。Rxjava和Retrofit相关要保护  rx.** 包下面的类。</p>
 <p><strong><em>4、打包APP时遇到的坑</em></strong></p>
 <p> ①遇到下面的问题，说明上面有很多的警告。只要使用   -ignorewarning 或者-dontwarn in.srain.cube.**来忽略警告就可以了。</p>
 <pre><code> Error:Execution failed for task :transformClassesAndResourcesWithProguardForRelease&apos;.
@@ -400,7 +401,7 @@ proguard.config=proguard.cfg
         <p><span>本文标题:</span><a href="/2016/11/22/Android鬼点子-代码混淆/">Android鬼点子-代码混淆</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
         <p><span>发布时间:</span>2016-11-22, 11:09:32</p>
-        <p><span>最后更新:</span>2016-11-22, 12:29:26</p>
+        <p><span>最后更新:</span>2016-11-22, 22:50:01</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/11/22/Android鬼点子-代码混淆/" title="Android鬼点子-代码混淆">http://greendami.top/2016/11/22/Android鬼点子-代码混淆/</a>
             <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/11/22/Android鬼点子-代码混淆/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
