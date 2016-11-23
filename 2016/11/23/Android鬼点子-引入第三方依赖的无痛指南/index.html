@@ -15,18 +15,21 @@
 
 
 
-<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。">
+<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;在Android开发中，使用第三方的依赖是已经不可避免的事，毕竟世界上已经有了轮子，为什么还要自己造车轮？无论是在Eclipse还是Android Studio里面，引入第三方依赖都是一件很简单的事情，但是这位里面还有一些细节需要注意，防止为后面的开发埋下坑。这里着重说的是AS，Eclipse已经是时候说再见了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android鬼点子-使用Espresso进行UI测试">
-<meta property="og:url" content="http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/index.html">
+<meta property="og:title" content="Android鬼点子-引入第三方依赖的无痛指南">
+<meta property="og:url" content="http://greendami.top/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/index.html">
 <meta property="og:site_name" content="GreendaMi'Blog">
-<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。">
-<meta property="og:image" content="http://google.github.io/android-testing-support-library/assets/espresso-cheat-sheet-2.1.0.png">
-<meta property="og:updated_time" content="2016-10-14T14:40:03.139Z">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;在Android开发中，使用第三方的依赖是已经不可避免的事，毕竟世界上已经有了轮子，为什么还要自己造车轮？无论是在Eclipse还是Android Studio里面，引入第三方依赖都是一件很简单的事情，但是这位里面还有一些细节需要注意，防止为后面的开发埋下坑。这里着重说的是AS，Eclipse已经是时候说再见了。">
+<meta property="og:image" content="http://img.blog.csdn.net/20150313152736896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvb2NlYW4yMA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:image" content="http://images.cnitblog.com/blog2015/54939/201504/231129521259725.png">
+<meta property="og:image" content="https://segmentfault.com/image?src=http://stormzhang.com/image/menu4.png&objectId=1190000002411926&token=c499f04f1b703b6589c217279de336ef">
+<meta property="og:image" content="http://img.blog.csdn.net/20160831135702592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
+<meta property="og:updated_time" content="2016-11-23T02:45:58.912Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android鬼点子-使用Espresso进行UI测试">
-<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。">
-<meta name="twitter:image" content="http://google.github.io/android-testing-support-library/assets/espresso-cheat-sheet-2.1.0.png">
+<meta name="twitter:title" content="Android鬼点子-引入第三方依赖的无痛指南">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;在Android开发中，使用第三方的依赖是已经不可避免的事，毕竟世界上已经有了轮子，为什么还要自己造车轮？无论是在Eclipse还是Android Studio里面，引入第三方依赖都是一件很简单的事情，但是这位里面还有一些细节需要注意，防止为后面的开发埋下坑。这里着重说的是AS，Eclipse已经是时候说再见了。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20150313152736896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvb2NlYW4yMA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -58,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Android鬼点子-使用Espresso进行UI测试 | GreendaMi&#39;Blog</title>
+<title>Android鬼点子-引入第三方依赖的无痛指南 | GreendaMi&#39;Blog</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -272,11 +275,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Android鬼点子-使用Espresso进行UI测试" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Android鬼点子-引入第三方依赖的无痛指南" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/" class="article-date">
-      <time datetime="2016-10-14T13:27:25.000Z" itemprop="datePublished">2016-10-14</time>
+      <a href="/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/" class="article-date">
+      <time datetime="2016-11-23T01:27:50.000Z" itemprop="datePublished">2016-11-23</time>
 </a>
 
 
@@ -291,7 +294,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Android鬼点子-使用Espresso进行UI测试
+      Android鬼点子-引入第三方依赖的无痛指南
     </h1>
   
 
@@ -312,42 +315,88 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;Android鬼点子系列第二篇，使用Espresso进行UI测试。这是一篇入门级别的教程。Espresso是谷歌官方的一个测试框架。 在Android Studio2.2中直接创建app类型的module，默认就会使用这个框架。<a id="more"></a></excerpt></p>
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;在Android开发中，使用第三方的依赖是已经不可避免的事，毕竟世界上已经有了轮子，为什么还要自己造车轮？无论是在Eclipse还是Android Studio里面，引入第三方依赖都是一件很简单的事情，但是这位里面还有一些细节需要注意，防止为后面的开发埋下坑。这里着重说的是AS，Eclipse已经是时候说再见了。<a id="more"></a></excerpt></p>
 <the rest="" of="" contents="" |="" 余下全文="">
 
-<p>&#160; &#160; &#160; &#160;Espresso的代码在包名下androidTest,(多说一句，这里还有一个叫做test的包，这个包下面是进行Junit测试)。说一说这两种测试的不同，Junit的更偏向于测试逻辑，不运行在模拟器中；Espresso是测试UI，比如点击按钮后TextView显示的内容是否正确。Espresso是运行在模拟器中的。</p>
-<pre><code>Espresso测试是非常容易实现的，它由三部分组成： 
-    ViewMachers：寻找用来测试的View。 
-    ViewActions：发送交互事件。 
-    ViewAssertions：检验测试结果。
-</code></pre><p>&#160; &#160; &#160; &#160;在包名下androidTest，默认创建ExampleInstrumentedTest.java。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.example.test;</div><div class="line"></div><div class="line"><span class="keyword">import</span> android.content.Context;</div><div class="line"><span class="keyword">import</span> android.support.test.InstrumentationRegistry;</div><div class="line"><span class="keyword">import</span> android.support.test.runner.AndroidJUnit4;</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.junit.Test;</div><div class="line"><span class="keyword">import</span> org.junit.runner.RunWith;</div><div class="line"></div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> junit.framework.Assert.assertEquals;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * Instrumentation test, which will execute on an Android device.</div><div class="line"> *</div><div class="line"> * <span class="doctag">@see</span> &lt;a href="http://d.android.com/tools/testing"&gt;Testing documentation&lt;/a&gt;</div><div class="line"> */</div><div class="line"><span class="meta">@RunWith</span>(AndroidJUnit4.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleInstrumentedTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">useAppContext</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">        <span class="comment">// Context of the app under test.</span></div><div class="line">        Context appContext = InstrumentationRegistry.getTargetContext();</div><div class="line"></div><div class="line">        assertEquals(<span class="string">"com.example.test"</span>, appContext.getPackageName());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>&#160; &#160; &#160; &#160;我们发现这里使用了assertEquals断言，所以Espresso是建立在Junit基础上的。在gradle配置如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    mavenCentral()</div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">    compile fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])</div><div class="line">    androidTestCompile(&apos;com.android.support.test.espresso:espresso-core:2.2.2&apos;, &#123;</div><div class="line">        exclude group: &apos;com.android.support&apos;, module: &apos;support-annotations&apos;</div><div class="line">    &#125;)</div><div class="line">    compile &apos;com.android.support:appcompat-v7:23.4.0&apos;</div><div class="line">    testCompile &apos;junit:junit:4.12&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>基本的使用方法：<br><strong>onView(ViewMatcher).perform(ViewAction).check(ViewAssertion);</strong></p>
-<p>下面的方法适用于使用Adapter的View。<br><strong>onData(ObjectMatcher).DataOptions.perform(ViewAction).check(ViewAssertion);</strong></p>
-<blockquote>
-<p>1、寻找测试元素（Matcher）</p>
-</blockquote>
-<p>&#160; &#160; &#160; &#160;Espresso提供了一个onView()方法用来寻找UI上指定的元素.onView的输入参数是一个Matcher对象，有很多方法都会返回这个对象，我们可以把这些方法理解为寻找测试View的规则。</p>
-<pre><code>withId()使用控件的ID进行查找
-withText()使用控件上的Text属性的值进行查找
-还有withHint(),withTagKey()等等
-</code></pre><blockquote>
-<p>2、进行操作（ViewAction）</p>
-</blockquote>
-<p>&#160; &#160; &#160; &#160;比如点击，双击，长按等等，当然这个步奏不是必须的。perform()里面可以传进驱若干个参数，也就是若干个动作，这些动作会依次执行。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">onView(withId(id)).perform(click(), clearText(), closeSoftKeyboard())</div></pre></td></tr></table></figure>
-<blockquote>
-<p>3、检测结果（ViewAssertion）</p>
-</blockquote>
-<p>&#160; &#160; &#160; &#160;最后查看结果，例如：matches(Matcher)，isAbove(Matcher)等等。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">onView(withText(<span class="string">"Hello world!"</span>)).check(matches(isDisplayed()));</div></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;附上一个网上别人写的例子<a href="http://blog.csdn.net/weijianfeng1990912/article/details/51540468" target="_blank" rel="external">地址</a></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">@RunWith</span>(AndroidJUnit4.class)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LoginActivityTest</span></span>&#123;</div><div class="line">    <span class="meta">@Rule</span></div><div class="line">    <span class="comment">//注解定义规则</span></div><div class="line">    <span class="keyword">public</span> ActivityTestRule&lt;LoginActivity&gt; mActivityRule = <span class="keyword">new</span> ActivityTestRule&lt;&gt;(</div><div class="line">            LoginActivity.class);</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="comment">//测试用例</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="comment">//清除 之前输入点用户名和密码</span></div><div class="line">        onView(withId(R.id.login_et_username)).perform(clearText());</div><div class="line">        onView(withId(R.id.login_et_password)).perform(clearText());</div><div class="line">        <span class="comment">//输入用户名和密码并关闭软键盘</span></div><div class="line">        onView(withId(R.id.login_et_username)).perform(typeText(<span class="string">"18500000000\n"</span>), closeSoftKeyboard());</div><div class="line">        onView(withId(R.id.login_et_password)).perform(typeText(<span class="string">"wjf"</span>),closeSoftKeyboard());</div><div class="line">       <span class="comment">//触发登录按钮的点击事件</span></div><div class="line">        onView(withId(R.id.login_fa_login)).perform(click());</div><div class="line">       <span class="comment">//通过断言判断是否登录成功，这里通过会话列表是否显示来判断</span></div><div class="line">        onView(withId(R.id.list_fl_list)).check(ViewAssertions.matches(isDisplayed()));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;当你的View是使用Adapter的时候，可能显示在画面上的并不是整个View，实际上并没有加载整个View。这里就要使用onData()了。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//如果使用的是 SimpleAdapter，那么data的类型就Map型，如下：</span></div><div class="line">Map:&#123;<span class="string">"STR"</span> : <span class="string">"item: 50"</span>, <span class="string">"LEN"</span>: <span class="number">7</span>&#125;</div><div class="line"><span class="comment">//模拟一个点击显示内容是"item: 50"的item。</span></div><div class="line">onData(allOf(is(instanceOf(Map.class)), hasEntry(equalTo(<span class="string">"STR"</span>), is(<span class="string">"item: 50"</span>)))</div><div class="line">  .perform(click());</div><div class="line"></div><div class="line">onData(withItemContent(<span class="string">"item: 60"</span>))</div><div class="line">  .onChildView(withId(R.id.item_size))</div><div class="line">  .perform(click());</div></pre></td></tr></table></figure>
-<p>&#160; &#160; &#160; &#160;edittext 中 搜狗输入法输入的 内容，在自动化之行过程中，可能出现输入不全的问题，可换用系统自带输入法，或者谷歌原生输入法。<br>当有多个edittext 时候，可能出现第一个edittext 输入完之后，第二个输入无反应，可以在typeText（）中的字符后面加上 “\n” 尝试解决。 <a href="https://google.github.io/android-testing-support-library/" target="_blank" rel="external">谷歌官方文档</a></p>
-<p>最后一张图可以总结我上面的废话：<br><img src="http://google.github.io/android-testing-support-library/assets/espresso-cheat-sheet-2.1.0.png" alt="espresso-cheat-sheet-2.1.0"></p>
+<p><strong><em>1.在Android Studio中引入jar包</em></strong></p>
+<p>&#160; &#160; &#160; &#160;在module下创建一个libs文件夹，然后把jar包放进去（拷贝进去），然后右键点击这个jar文件，在出现的菜单中点击“Add as Library…”。这样就会在该module的build.gradle里面出现下面的设置。</p>
+<pre><code>compile files(&apos;libs/badgeview.jar&apos;)
+</code></pre><p>当然，也可以在build.gradle中直接输入下面的内容</p>
+<pre><code>compile fileTree(include: [&apos;*.jar&apos;], dir: &apos;libs&apos;)
+</code></pre><p>这样就会把libs文件夹下面的所有jar文件引入。如果是arr包，也是类似的配置。</p>
+<pre><code>compile fileTree(dir: &apos;libs&apos;, include: &apos;*.aar&apos;)
+</code></pre><p>&#160; &#160; &#160; &#160;除此之外还有另一种方法,右键module根目录，进入“Open Module Setting F12”，进入到下图。</p>
+<p><img src="http://img.blog.csdn.net/20150313152736896?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvb2NlYW4yMA==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="来自http://blog.csdn.net/ocean20/article/details/44241629"></p>
+<p>左边选择添加到哪个Module，右边选择“Dependencies”选项卡，点击加号。会出现3个选项，“Library Dependency”——远程依赖，这里会打开一个搜索框进行搜索；“File Dependency”——文件依赖，就是我们说的jar包，这里会让选择你要导入的jar包，所以最好在module下创建一个libs文件夹，然后把jar包放进去，再在这里选择；“Module Dependency”——项目依赖，可以选择一个本地项目作为依赖，前提是这个项目的类型是Library。</p>
+<p>我们注意到右边还有一个选项<br><img src="http://images.cnitblog.com/blog2015/54939/201504/231129521259725.png" alt="来自http://www.cnblogs.com/kangyi/p/4449857.html"></p>
+<p><strong>compile</strong>是对所有的build type以及favlors都会参与编译并且打包到最终的apk文件中。<br><strong>Provided</strong>是对所有的build type以及favlors只在编译时使用，类似eclipse中的external-libs,只参与编译，不打包到最终apk。<br><strong>APK</strong>是只会打包到apk文件中，而不参与编译，所以不能再代码中直接调用jar中的类或方法，否则在编译时会报错<br><strong>Test compile</strong>是仅仅是针对单元测试代码的编译编译以及最终打包测试apk时有效，而对正常的debug或者release apk包不起作用。<br><strong>Debug compile</strong>是仅仅针对debug模式的编译和最终的debug apk打包。<br><strong>Release compile</strong>是仅仅针对Release 模式的编译和最终的Release apk打包。</p>
+<p>&#160; &#160; &#160; &#160;完成上面的步骤，在build.gradle中就会出现和上图一致的配置了。</p>
+<p><strong><em>2.在Android Studio中引入远程依赖</em></strong></p>
+<p>&#160; &#160; &#160; &#160;引入远程依赖同样可以在Open Module Setting中配置，也可以在build.gradle中直接写。下面是我在项目中用到远程依赖的配置。</p>
+<pre><code>dependencies {
+    compile project(&apos;:greendami&apos;)
+    //compile fileTree(include: [&apos;*.jar&apos;], dir: &apos;libs&apos;)
+    compile files(&apos;libs/badgeview.jar&apos;)
+    compile files(&apos;libs/butterknife-7.0.1.jar&apos;)
+    compile files(&apos;libs/easemobchat_2.2.0.jar&apos;)
+    compile files(&apos;libs/pinyin4j-2.5.0.jar&apos;)
+    compile files(&apos;libs/weiboSDKCore_3.1.4.jar&apos;)
+    compile files(&apos;libs/Native_Libs2.jar&apos;)
+    compile &apos;com.squareup.retrofit2:adapter-rxjava:+&apos;
+    compile &apos;com.squareup.retrofit2:converter-gson:+&apos;
+    compile &apos;com.squareup.retrofit2:retrofit:2.0.0-beta3&apos;
+    compile &apos;com.squareup.okhttp3:okhttp:3.0.1&apos;
+    compile &apos;org.greenrobot:eventbus:3.0.0&apos;
+    compile &apos;au.com.gridstone.rxstore:rxstore:4.0.0&apos;
+    compile &apos;au.com.gridstone.rxstore:converter-gson:4.0.0&apos;
+    compile &apos;io.reactivex:rxandroid:1.1.0&apos;
+    compile &apos;io.reactivex:rxjava:1.1.0&apos;
+    compile &apos;com.joanzapata.android:base-adapter-helper:1.1.11&apos;
+    compile &apos;com.squareup.okhttp3:logging-interceptor:+&apos;
+    compile &apos;com.android.support:design:23.4.0&apos;
+    compile &apos;com.github.chrisbanes:PhotoView:+&apos;
+    compile files(&apos;libs/libammsdk.jar&apos;)
+    compile files(&apos;libs/AMap_Location_v1.4.1_20150917.jar&apos;)
+}
+</code></pre><p>compile project(‘:greendami’)这里是引用的一个本地Module。</p>
+<p>compile ‘com.squareup.retrofit2:adapter-rxjava:+’这里后面的“ <strong>+</strong> ”的意思是使用最新版本。</p>
+<p>compile ‘com.android.support:design:23.4.0’的“23.4.0”这里是给出了固定的版本。</p>
+<p>远程依赖有冲突的时候，即多个远程依赖，都依赖了同一个的话，可以使用下面的方法去掉。举个例子“com.android.support:design:23.4.0”这里的“com.android.support”是group，“design”是module。</p>
+<pre><code>compile(&apos;com.google.api-client:google-api-client:1.17.0-rc&apos;) {
+// Exclude artifacts that the Android SDK/Runtime provides.
+    exclude(group: &apos;xpp3&apos;, module: &apos;xpp3&apos;)
+    exclude(group: &apos;org.apache.httpcomponents&apos;, module: &apos;httpclient&apos;)
+    exclude(group: &apos;junit&apos;, module: &apos;junit&apos;)
+    exclude(group: &apos;com.google.android&apos;, module: &apos;android&apos;)
+}
+</code></pre><p>在Module的build.gradle中，中配置了远程库的位置，有3个，会按照先后顺序去查找。</p>
+<pre><code>allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven { url &quot;https://jitpack.io&quot; }
+    }
+}
+</code></pre><p>在Project的build.gradle中，也有一个这样的配置，当Module没有配置远程库的位置的时候，Project的配置生效。</p>
+<pre><code>buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath &apos;com.android.tools.build:gradle:2.2.2&apos;
+    }
+}
+</code></pre><p>做好了以上的配置，记得要Gradle同步一下，红圈中左边第一个。<br><img src="https://segmentfault.com/image?src=http://stormzhang.com/image/menu4.png&amp;objectId=1190000002411926&amp;token=c499f04f1b703b6589c217279de336ef" alt="来自https://segmentfault.com/a/1190000002411926"></p>
+<p>Project的视图模式来查看的时候点开External Libraries，这里面就是所有的compile的包了<br><img src="http://img.blog.csdn.net/20160831135702592?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="来自http://blog.csdn.net/rodulf/article/details/52384282"></p>
+<p><strong><em>3.在Android Studio中引入SO库</em></strong></p>
+<p>so文件应该放在哪里？在build.gradle中进行了说明。</p>
+<pre><code>sourceSets {
+        main {
+            jniLibs.srcDirs = [&apos;src/main/jniLibs&apos;]
+            aidl.srcDirs = [&apos;src/main/aidl&apos;]
+        }
+    }
+</code></pre><p>src/main/jniLibs，在这里。在这个文件夹下面可以收x86，arm64-v8a等文件夹，对应不同的平台。这里Android Studio与Eclipse有所不同。</p>
 </the>
       
     </div>
@@ -356,13 +405,13 @@ withText()使用控件上的Text属性的值进行查找
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">Android鬼点子-使用Espresso进行UI测试</a></p>
+        <p><span>本文标题:</span><a href="/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/">Android鬼点子-引入第三方依赖的无痛指南</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
-        <p><span>发布时间:</span>2016-10-14, 21:27:25</p>
-        <p><span>最后更新:</span>2016-10-14, 22:40:03</p>
+        <p><span>发布时间:</span>2016-11-23, 09:27:50</p>
+        <p><span>最后更新:</span>2016-11-23, 10:45:58</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/" title="Android鬼点子-使用Espresso进行UI测试">http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/" title="Android鬼点子-引入第三方依赖的无痛指南">http://greendami.top/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -374,16 +423,10 @@ withText()使用控件上的Text属性的值进行查找
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2016/10/20/Android鬼点子-探索View的实例化过程/">
-                    Android鬼点子-探索View的实例化过程
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/">
-                    Android鬼点子-使用ViewStub进行延迟加载
+                <a href="/2016/11/22/Android鬼点子-代码混淆/">
+                    Android鬼点子-代码混淆
                 </a>
             </div>
         
@@ -431,7 +474,7 @@ withText()使用控件上的Text属性的值进行查找
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Android鬼点子-使用Espresso进行UI测试　| GreendaMi'Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"Android鬼点子-引入第三方依赖的无痛指南　| GreendaMi'Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -447,7 +490,7 @@ withText()使用控件上的Text属性的值进行查找
     
       <div class="duoshuo" id="comments">
     <div id="comment-box" ></div>
-    <div class="ds-thread" id="ds-thread" data-thread-key="2016/10/14/Android鬼点子-使用Espresso进行UI测试/" data-title="Android鬼点子-使用Espresso进行UI测试" data-url="http://greendami.top/2016/10/14/Android鬼点子-使用Espresso进行UI测试/"></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/" data-title="Android鬼点子-引入第三方依赖的无痛指南" data-url="http://greendami.top/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/"></div>
     <script>
         var duoshuoQuery = {short_name:"http://greendami.duoshuo.com"};
         var loadComment = function(){
@@ -470,15 +513,13 @@ withText()使用控件上的Text属性的值进行查找
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2016/10/20/Android鬼点子-探索View的实例化过程/" title="上一篇: Android鬼点子-探索View的实例化过程">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/" title="下一篇: Android鬼点子-使用ViewStub进行延迟加载">
+            <a href="/2016/11/22/Android鬼点子-代码混淆/" title="下一篇: Android鬼点子-代码混淆">
                 <i class="fa fa-angle-right"></i>
             </a>
         
