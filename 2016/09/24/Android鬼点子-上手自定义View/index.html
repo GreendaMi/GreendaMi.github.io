@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="GreendaMi" />
+
+
+
+<meta name="description" content="Dots preloader&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android自定义View也算是Android程序猿们基本技能了，所以最近想试着上周做一做。作为入门，就以一个简单的不响应触摸事件的View开始吧！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="上手自定义View(一)">
+<meta property="og:url" content="http://greendami.top/2016/09/24/Android鬼点子-上手自定义View/index.html">
+<meta property="og:site_name" content="GreendaMi'Blog">
+<meta property="og:description" content="Dots preloader&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android自定义View也算是Android程序猿们基本技能了，所以最近想试着上周做一做。作为入门，就以一个简单的不响应触摸事件的View开始吧！">
+<meta property="og:image" content="http://assets.materialup.com/uploads/1df992f1-6702-42d7-bbe1-b1b5b1e9872f/preview.gif">
+<meta property="og:updated_time" content="2016-11-25T10:54:21.561Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="上手自定义View(一)">
+<meta name="twitter:description" content="Dots preloader&amp;#160; &amp;#160; &amp;#160; &amp;#160;Android自定义View也算是Android程序猿们基本技能了，所以最近想试着上周做一做。作为入门，就以一个简单的不响应触摸事件的View开始吧！">
+<meta name="twitter:image" content="http://assets.materialup.com/uploads/1df992f1-6702-42d7-bbe1-b1b5b1e9872f/preview.gif">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="GreendaMi&#39;Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/touxiang.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>上手自定义View(一) | GreendaMi&#39;Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?527c4de09cdacdf459cc67b40f582764";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/touxiang.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">GreendaMi</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">用心做事，开心做人</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">在修炼Android的道路上走火入魔</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">GreendaMi</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/touxiang.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">GreendaMi</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">用心做事，开心做人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android鬼点子-上手自定义View" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/09/24/Android鬼点子-上手自定义View/" class="article-date">
+      <time datetime="2016-09-24T00:43:38.000Z" itemprop="datePublished">2016-09-24</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      上手自定义View(一)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><excerpt in="" index="" |="" 首页摘要=""><br><a href="http://assets.materialup.com/uploads/1df992f1-6702-42d7-bbe1-b1b5b1e9872f/preview.gif" target="_blank" rel="external">Dots preloader</a><br>&#160; &#160; &#160; &#160;Android自定义View也算是Android程序猿们基本技能了，所以最近想试着上周做一做。<br>作为入门，就以一个简单的不响应触摸事件的View开始吧！<a id="more"></a></excerpt></p>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+
+<p>&#160; &#160; &#160; &#160;我在<a href="https://material.uplabs.com/posts/dots-preloader" target="_blank" rel="external">https://material.uplabs.com/posts/dots-preloader</a> 上看到的下面的效果，那么动手实现一下吧 <img src="http://assets.materialup.com/uploads/1df992f1-6702-42d7-bbe1-b1b5b1e9872f/preview.gif" alt="Dots preloader"></p>
+<ul>
+<li>在OnMeasure()方法中，获取属性值，测量自定义控件的大小，使自定义控件能够自适应布局各种各样的需求。</li>
+</ul>
+<p>在attr.xml中</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"DotsPreloader"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"Circlecolor"</span> <span class="attr">format</span>=<span class="string">"color"</span>&gt;</span><span class="tag">&lt;/<span class="name">attr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>在构造方法中获取属性，设置点点的颜色</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">TypedArray a = context.obtainStyledAttributes(attrs , R.styleable.DotsPreloader);</div><div class="line">mColor = a.getColor(R.styleable.DotsPreloader_Circlecolor,Color.GRAY);</div><div class="line">a.recycle();</div><div class="line">``` </div><div class="line">测量View的大小</div><div class="line"></div><div class="line">```<span class="function">java</span></div><div class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></div><div class="line">``` </div><div class="line"></div><div class="line">其中来自父控件的信息都是封装在widthMeasureSpec和heightMeasureSpec中，其中包含测量模式和具体的大小，由高32位和低16位组成，高32位保存的值叫specMode，可以通过如代码中所示的MeasureSpec.<span class="title">getMode</span><span class="params">()</span>获取；低16位为specSize，由MeasureSpec.<span class="title">getSize</span><span class="params">()</span>获取。</div><div class="line">specMode一共有三种可能：</div><div class="line">    </div><div class="line">    MeasureSpec.EXACTLY：父视图希望子视图的大小应该是specSize中指定的。</div><div class="line">    MeasureSpec.AT_MOST：子视图的大小最多是specSize中指定的值，也就是说不建议子视图的大小超过specSize中给定的值。</div><div class="line">    MeasureSpec.UNSPECIFIED：我们可以随意指定视图的大小。比如scollerView，因为是可以滚动的，所以长度是没有限制的。</div><div class="line"></div><div class="line">最后测量的结果由下面这个方法设定</div><div class="line"><span class="title">setMeasuredDimension</span><span class="params">(<span class="keyword">int</span> measuredWidth, <span class="keyword">int</span> measuredHeight)</span></div><div class="line"></div><div class="line">```java</div><div class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> &#123;</div><div class="line">        <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">        <span class="keyword">int</span> heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line"></div><div class="line">        mLayoutSize = Math.min(widthSpecSize,heightSpecSize);</div><div class="line">        </div><div class="line"><span class="comment">//        此处需要调用measureChild，子View才会被测量，在onLayout()中，才能取到子View长宽</span></div><div class="line"><span class="comment">//        int cCount = getChildCount();</span></div><div class="line"><span class="comment">//        for (int i = 0; i &lt; cCount; i++) &#123;</span></div><div class="line"><span class="comment">//            View child = getChildAt(i);</span></div><div class="line"><span class="comment">//            // 测量每一个child的宽和高</span></div><div class="line"><span class="comment">//            measureChild(child, widthMeasureSpec, heightMeasureSpec);</span></div><div class="line"><span class="comment">//</span></div><div class="line"><span class="comment">//        &#125;</span></div><div class="line">        <span class="comment">//这里直接设成来自父控件大小的一个正方形</span></div><div class="line">        setMeasuredDimension(mLayoutSize, mLayoutSize);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>onLayout()是决定View在ViewGroup的位置。因为我们现在讨论的是View，没有子View需要排列，所以这一步其实我们不需要做额外的工作。插一句，对ViewGroup类，onLayout方法中，我们需要将所有子View的大小宽高设置好,这里大致说以layout的流程。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">getChildCount();<span class="comment">//取到自子View的数量。</span></div><div class="line"></div><div class="line">View childView = getChildAt(i);<span class="comment">//取到子View的信息。</span></div><div class="line">cWidth = childView.getMeasuredWidth();  </div><div class="line">cHeight = childView.getMeasuredHeight();  </div><div class="line">cParams = (MarginLayoutParams) childView.getLayoutParams(); </div><div class="line"></div><div class="line">cl = cParams.leftMargin;  </div><div class="line">ct = cParams.topMargin;</div><div class="line"><span class="comment">//最后设置</span></div><div class="line">childView.layout(cl, ct, cr, cb);</div></pre></td></tr></table></figure>
+<p>View中还有三个比较重要的方法</p>
+<pre><code>requestLayout
+View重新调用一次layout过程。
+
+invalidate
+View重新调用一次draw过程
+
+forceLayout
+标识View在下一次重绘，需要重新调用layout过程。
+</code></pre><ul>
+<li>在OnDraw（）方法中，来绘制要显示的内容。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">        <span class="comment">//圆点的半径</span></div><div class="line">        <span class="keyword">double</span> radius = (mLayoutSize/<span class="number">6</span>) * <span class="number">0.3</span>;</div><div class="line">        <span class="comment">//圆点之间的缝隙</span></div><div class="line">        <span class="keyword">double</span> gap = (mLayoutSize/<span class="number">6</span>) * <span class="number">0.4</span>;</div><div class="line">        <span class="comment">//计算6个圆点的圆心坐标</span></div><div class="line">        List&lt;Point&gt; mCenterPoints = getCenterPoints(radius,gap);</div><div class="line">        <span class="keyword">for</span>(Point mCenterPoint : mCenterPoints)&#123;</div><div class="line">            canvas.drawCircle(mCenterPoint.x , mCenterPoint.y , (<span class="keyword">float</span>) radius , mPain);</div><div class="line">        &#125;</div><div class="line"><span class="comment">//      postInvalidateDelayed(20);</span></div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line">    </div><div class="line"><span class="function"><span class="keyword">private</span> List&lt;Point&gt; <span class="title">getCenterPoints</span><span class="params">(<span class="keyword">double</span> r, <span class="keyword">double</span> g)</span> </span>&#123;</div><div class="line">        List&lt;Point&gt; mCenterPoints = <span class="keyword">new</span> ArrayList&lt;Point&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">float</span> mCenterPointGap = <span class="keyword">new</span> Float(<span class="number">2</span> * r + g);</div><div class="line">        <span class="keyword">double</span> a = (<span class="number">1</span>-(<span class="number">1</span>-time) * (<span class="number">1</span>-time)) * mCenterPointGap;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(time &gt; <span class="number">1</span>)&#123;</div><div class="line">            time = <span class="number">0</span>;</div><div class="line">            <span class="comment">//这里控制第一个圆点是在上面走还是下面走</span></div><div class="line">            <span class="keyword">if</span>(flag == <span class="number">0</span>)&#123;</div><div class="line">                flag = <span class="number">1</span>;</div><div class="line">            &#125;<span class="keyword">else</span>&#123;</div><div class="line">                flag = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;<span class="keyword">else</span>&#123;</div><div class="line">            time = time + <span class="number">0.025</span>;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="comment">//后5个点只是平移效果</span></div><div class="line">        <span class="keyword">int</span> y = mLayoutSize/<span class="number">2</span>;</div><div class="line">        Float x2 = <span class="keyword">new</span> Float((r + g)/<span class="number">2</span> + mCenterPointGap * <span class="number">1</span> - a);</div><div class="line">        Float x3 = <span class="keyword">new</span> Float((r + g)/<span class="number">2</span> + mCenterPointGap * <span class="number">2</span> - a);</div><div class="line">        Float x4 = <span class="keyword">new</span> Float((r + g)/<span class="number">2</span> + mCenterPointGap * <span class="number">3</span> - a);</div><div class="line">        Float x5 = <span class="keyword">new</span> Float((r + g)/<span class="number">2</span> + mCenterPointGap * <span class="number">4</span> - a);</div><div class="line">        Float x6 = <span class="keyword">new</span> Float((r + g)/<span class="number">2</span> + mCenterPointGap * <span class="number">5</span> - a);</div><div class="line"></div><div class="line">        Double x1 = <span class="number">0.5</span> * g + r +  (<span class="number">1</span>-(<span class="number">1</span>-time) * (<span class="number">1</span>-time)) * mCenterPointGap * <span class="number">5</span>;</div><div class="line"></div><div class="line">        <span class="comment">//这里使用了x²+y²=r²</span></div><div class="line">        Double y1 = Math.sqrt((mLayoutSize - g - <span class="number">2</span> * r) * (mLayoutSize - g - <span class="number">2</span> * r)/<span class="number">4</span> - (x1 - mLayoutSize * <span class="number">0.5</span>) * (x1 - mLayoutSize * <span class="number">0.5</span>)) + mLayoutSize * <span class="number">0.5</span>;</div><div class="line">        <span class="keyword">if</span>(flag == <span class="number">0</span>)&#123;</div><div class="line">            y1 = mLayoutSize * <span class="number">0.5</span> - Math.sqrt((mLayoutSize - g - <span class="number">2</span> * r) * (mLayoutSize - g - <span class="number">2</span> * r)/<span class="number">4</span> - (x1 - mLayoutSize * <span class="number">0.5</span>) * (x1 - mLayoutSize * <span class="number">0.5</span>));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mCenterPoints.add(<span class="keyword">new</span> Point(x1.intValue(),y1.intValue()));</div><div class="line">        mCenterPoints.add(<span class="keyword">new</span> Point(x2.intValue(),y));</div><div class="line">        mCenterPoints.add(<span class="keyword">new</span> Point(x3.intValue(),y));</div><div class="line">        mCenterPoints.add(<span class="keyword">new</span> Point(x4.intValue(),y));</div><div class="line">        mCenterPoints.add(<span class="keyword">new</span> Point(x5.intValue(),y));</div><div class="line">        mCenterPoints.add(<span class="keyword">new</span> Point(x6.intValue(),y));</div><div class="line">        <span class="keyword">return</span>  mCenterPoints;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>下面是完整代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line">package com.example.dotspreloader;</div><div class="line"></div><div class="line">import android.content.Context;</div><div class="line">import android.content.res.TypedArray;</div><div class="line">import android.graphics.Canvas;</div><div class="line">import android.graphics.Color;</div><div class="line">import android.graphics.Paint;</div><div class="line">import android.graphics.Point;</div><div class="line">import android.util.AttributeSet;</div><div class="line">import android.util.Log;</div><div class="line">import android.view.View;</div><div class="line"></div><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Created by GreendaMi on 2016/9/17.</div><div class="line"> */</div><div class="line">public class DotsPreloader extends View&#123;</div><div class="line"></div><div class="line">    public int mColor;</div><div class="line">    public Paint mPain = new Paint();</div><div class="line">    private int mLayoutSize = 100;</div><div class="line">    double time = 0;</div><div class="line">    int flag = 0;</div><div class="line">    public DotsPreloader(Context context) &#123;</div><div class="line">        super(context);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public DotsPreloader(Context context, AttributeSet attrs) &#123;</div><div class="line">        super(context, attrs);</div><div class="line">        TypedArray a = context.obtainStyledAttributes(attrs , R.styleable.DotsPreloader);</div><div class="line">        mColor = a.getColor(R.styleable.DotsPreloader_Circlecolor,Color.WHITE);</div><div class="line">        a.recycle();</div><div class="line">        init();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public DotsPreloader(Context context, AttributeSet attrs, int defStyleAttr) &#123;</div><div class="line">        super(context, attrs, defStyleAttr);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private void init() &#123;</div><div class="line">        mPain.setAntiAlias(false);</div><div class="line">        if (BuildConfig.DEBUG) Log.d(&quot;DotsPreloader&quot;, &quot;mColor:&quot; + mColor);</div><div class="line">        mPain.setColor(mColor);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</div><div class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">        int widthSpecMode = MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">        int heightSpecMode = MeasureSpec.getMode(heightMeasureSpec);</div><div class="line"></div><div class="line">        int widthSpecSize = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">        int heightSpecSize = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line"></div><div class="line">        mLayoutSize = Math.min(widthSpecSize,heightSpecSize);</div><div class="line">        setMeasuredDimension(mLayoutSize, mLayoutSize);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDraw(Canvas canvas) &#123;</div><div class="line">        super.onDraw(canvas);</div><div class="line">        double radius = (mLayoutSize/6) * 0.3;</div><div class="line">        double gap = (mLayoutSize/6) * 0.4;</div><div class="line">        List&lt;Point&gt; mCenterPoints = getCenterPoints(radius,gap);</div><div class="line">        for(Point mCenterPoint : mCenterPoints)&#123;</div><div class="line">            canvas.drawCircle(mCenterPoint.x , mCenterPoint.y , (float) radius , mPain);</div><div class="line">        &#125;</div><div class="line">//      postInvalidateDelayed(20);</div><div class="line">        invalidate();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private List&lt;Point&gt; getCenterPoints(double r, double g) &#123;</div><div class="line">        List&lt;Point&gt; mCenterPoints = new ArrayList&lt;Point&gt;();</div><div class="line"></div><div class="line">        float mCenterPointGap = new Float(2 * r + g);</div><div class="line">        double a = (1-(1-time) * (1-time)) * mCenterPointGap;</div><div class="line"></div><div class="line">        if(time &gt; 1)&#123;</div><div class="line">            time = 0;</div><div class="line">            if(flag == 0)&#123;</div><div class="line">                flag = 1;</div><div class="line">            &#125;else&#123;</div><div class="line">                flag = 0;</div><div class="line">            &#125;</div><div class="line">        &#125;else&#123;</div><div class="line">            time = time + 0.025;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        int y = mLayoutSize/2;</div><div class="line">        Float x2 = new Float((r + g)/2 + mCenterPointGap * 1 - a);</div><div class="line">        Float x3 = new Float((r + g)/2 + mCenterPointGap * 2 - a);</div><div class="line">        Float x4 = new Float((r + g)/2 + mCenterPointGap * 3 - a);</div><div class="line">        Float x5 = new Float((r + g)/2 + mCenterPointGap * 4 - a);</div><div class="line">        Float x6 = new Float((r + g)/2 + mCenterPointGap * 5 - a);</div><div class="line"></div><div class="line">        Double x1 = 0.5 * g + r +  (1-(1-time) * (1-time)) * mCenterPointGap * 5;</div><div class="line"></div><div class="line">        Double y1 = Math.sqrt((mLayoutSize - g - 2 * r) * (mLayoutSize - g - 2 * r)/4 - (x1 - mLayoutSize * 0.5) * (x1 - mLayoutSize * 0.5)) + mLayoutSize * 0.5;</div><div class="line">        if(flag == 0)&#123;</div><div class="line">            y1 = mLayoutSize * 0.5 - Math.sqrt((mLayoutSize - g - 2 * r) * (mLayoutSize - g - 2 * r)/4 - (x1 - mLayoutSize * 0.5) * (x1 - mLayoutSize * 0.5));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mCenterPoints.add(new Point(x1.intValue(),y1.intValue()));</div><div class="line">        mCenterPoints.add(new Point(x2.intValue(),y));</div><div class="line">        mCenterPoints.add(new Point(x3.intValue(),y));</div><div class="line">        mCenterPoints.add(new Point(x4.intValue(),y));</div><div class="line">        mCenterPoints.add(new Point(x5.intValue(),y));</div><div class="line">        mCenterPoints.add(new Point(x6.intValue(),y));</div><div class="line">        return  mCenterPoints;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在value/attr.xml中<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"DotsPreloader"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"Circlecolor"</span> <span class="attr">format</span>=<span class="string">"color"</span>&gt;</span><span class="tag">&lt;/<span class="name">attr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>布局文件中使用<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">引用自定义属性要加上下面这句话</div><div class="line">xmlns:DotsPreloader="http://schemas.android.com/apk/res-auto"</div><div class="line"></div><div class="line"><span class="tag">&lt;<span class="name">com.example.dotspreloader.DotsPreloader</span></span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"200dp"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"200dp"</span></div><div class="line">        <span class="attr">DotsPreloader:Circlecolor</span>=<span class="string">"@color/myOrderColor"</span>/&gt;</div></pre></td></tr></table></figure></p>
+<p>到此一个最简单的自定义View就完成了，比较有困都难的地方就是坐标的计算，可怜了我小学的体育老师啊~~~</p>
+</the>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/09/24/Android鬼点子-上手自定义View/">上手自定义View(一)</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
+        <p><span>发布时间:</span>2016-09-24, 08:43:38</p>
+        <p><span>最后更新:</span>2016-11-25, 18:54:21</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/09/24/Android鬼点子-上手自定义View/" title="上手自定义View(一)">http://greendami.top/2016/09/24/Android鬼点子-上手自定义View/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/09/24/Android鬼点子-上手自定义View/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2016/10/03/Android鬼点子-View的事件分发机制/">
+                    上手自定义View(二)——View的事件分发机制
+                </a>
+            </div>
+        
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"上手自定义View(一)　| GreendaMi'Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/09/24/Android鬼点子-上手自定义View/" data-title="上手自定义View(一)" data-url="http://greendami.top/2016/09/24/Android鬼点子-上手自定义View/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"http://greendami.duoshuo.com"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2016/10/03/Android鬼点子-View的事件分发机制/" title="上一篇: 上手自定义View(二)——View的事件分发机制">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/Adnroid鬼点子-自定义Seek控制条/">Adnroid鬼点子-自定义Seek控制条</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/">Android鬼点子-引入第三方依赖的无痛指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/Android鬼点子-代码混淆/">Android鬼点子-代码混淆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/31/Android鬼点子-Activity的隐式调用/">Android鬼点子-Activity的隐式调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/20/Android鬼点子-探索View的实例化过程/">Android鬼点子-探索View的实例化过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">Android鬼点子-使用Espresso进行UI测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/">Android鬼点子-使用ViewStub进行延迟加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/Android鬼点子-View的事件分发机制/">上手自定义View(二)——View的事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/Android鬼点子-上手自定义View/">上手自定义View(一)</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 GreendaMi
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
