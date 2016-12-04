@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="GreendaMi" />
+
+
+
+<meta name="description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;视频播放是手机端很常用的需求，Vitamio是搜索里面词条出现最多的了。Vitamio是一款 Android 与 iOS 平台上的全能多媒体开发框架，全面支持硬件解码与 GPU 渲染。Vitamio 凭借其简洁易用的 API 接口赢得了全球众多开发者的青睐。到目前，全球已经有超过一万款应用在使用 Vitamio，覆盖用户超过 5亿。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android鬼点子-Vitamio视频播放框架一篇就入门">
+<meta property="og:url" content="http://greendami.top/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/index.html">
+<meta property="og:site_name" content="GreendaMi'Blog">
+<meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;视频播放是手机端很常用的需求，Vitamio是搜索里面词条出现最多的了。Vitamio是一款 Android 与 iOS 平台上的全能多媒体开发框架，全面支持硬件解码与 GPU 渲染。Vitamio 凭借其简洁易用的 API 接口赢得了全球众多开发者的青睐。到目前，全球已经有超过一万款应用在使用 Vitamio，覆盖用户超过 5亿。">
+<meta property="og:image" content="https://github.com/GreendaMi/movielineage/blob/master/mm2.gif""">
+<meta property="og:updated_time" content="2016-12-04T13:26:03.978Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android鬼点子-Vitamio视频播放框架一篇就入门">
+<meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;视频播放是手机端很常用的需求，Vitamio是搜索里面词条出现最多的了。Vitamio是一款 Android 与 iOS 平台上的全能多媒体开发框架，全面支持硬件解码与 GPU 渲染。Vitamio 凭借其简洁易用的 API 接口赢得了全球众多开发者的青睐。到目前，全球已经有超过一万款应用在使用 Vitamio，覆盖用户超过 5亿。">
+<meta name="twitter:image" content="https://github.com/GreendaMi/movielineage/blob/master/mm2.gif""">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternate" href="/atom.xml" title="GreendaMi&#39;Blog" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/img/touxiang.jpg">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Android鬼点子-Vitamio视频播放框架一篇就入门 | GreendaMi&#39;Blog</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: undefined
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?527c4de09cdacdf459cc67b40f582764";
+            var s = document.getElementsByTagName("script")[0]; 
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/touxiang.jpg" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">GreendaMi</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">用心做事，开心做人</p>
+        
+
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">在修炼Android的道路上走火入魔</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">GreendaMi</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/touxiang.jpg" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">GreendaMi</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">用心做事，开心做人</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:greendami@outlook.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/GreendaMi" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Android鬼点子-Vitamio视频播放框架一篇就入门" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/" class="article-date">
+      <time datetime="2016-12-04T12:20:36.000Z" itemprop="datePublished">2016-12-04</time>
+</a>
+
+
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android鬼点子-Vitamio视频播放框架一篇就入门
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android上道儿之路/">Android上道儿之路</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>&#160; &#160; &#160; &#160;视频播放是手机端很常用的需求，<a href="https://www.vitamio.org/" target="_blank" rel="external">Vitamio</a>是搜索里面词条出现最多的了。Vitamio是一款 Android 与 iOS 平台上的全能多媒体开发框架，全面支持硬件解码与 GPU 渲染。Vitamio 凭借其简洁易用的 API 接口赢得了全球众多开发者的青睐。到目前，全球已经有超过一万款应用在使用 Vitamio，覆盖用户超过 5亿。<a id="more"></a></excerpt></p>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<p>&#160; &#160; &#160; &#160;本文主要介绍Vitamio在A你droid平台基本集成。</p>
+<ol>
+<li><a href="https://github.com/yixia/VitamioBundle" target="_blank" rel="external">下载</a></li>
+</ol>
+<ol>
+<li><p>导入：下载回来后大家可能发现没有.project工程文件，可以通过File -&gt; Import -&gt; Android -&gt; Existing Android Code Into Workspace来导入工程，然后改一下工程名称即可。</p>
+</li>
+<li><p>将VitamioBundle工程作为Android Library引入。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    dependencies &#123;</div><div class="line">        compile fileTree(include: ['*.jar'], dir: 'libs')</div><div class="line">        compile project(':vitamio')</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注：作为Android Library引入是官方推荐的方式，当然也可以jar包的形式引入。</p>
+</li>
+</ol>
+<p>到此基本的准备工作就完成了。但是我在这里遇到了一点小问题，在引入的vitamio工程中，JNILib的路径是libs</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">sourceSets &#123;</div><div class="line">        main &#123;</div><div class="line">            manifest.srcFile &apos;AndroidManifest.xml&apos;</div><div class="line">            java.srcDirs = [&apos;src&apos;]</div><div class="line">            jniLibs.srcDirs = [&apos;libs&apos;]</div><div class="line">            aidl.srcDirs = [&apos;src&apos;]</div><div class="line">            renderscript.srcDirs = [&apos;src&apos;]</div><div class="line">            res.srcDirs = [&apos;res&apos;]</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>在我工程项目中还引用了其他框架，其他框架中也使用了JNI，但是那个框架的JNI路径不是在libs，两者有冲突，这里需要开发者手动调整一下。</p>
+<hr>
+<p><strong>下面是代码部分：</strong></p>
+<p>&#160; &#160; &#160; &#160;我使用的是SurfaceView作为播放控件</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">io.vov.vitamio.widget.CenterLayout</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">SurfaceView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/surface"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">        <span class="attr">android:layout_gravity</span>=<span class="string">"center"</span>&gt;</div><div class="line">    <span class="tag">&lt;/<span class="name">SurfaceView</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">io.vov.vitamio.widget.CenterLayout</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>外部嵌套FrameLayout，放入其他控制用的控件，就可以实现了视频的播放控制。</p>
+<blockquote>
+<p>1.首先初始化</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Vitamio.isInitialized(<span class="keyword">this</span>);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>2.全屏设置</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">requestWindowFeature(Window.FEATURE_NO_TITLE);<span class="comment">//隐藏标题</span></div><div class="line">        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,</div><div class="line">                WindowManager.LayoutParams.FLAG_FULLSCREEN);</div><div class="line">        setContentView(R.layout.player_layout);</div><div class="line">        butterknife.ButterKnife.bind(<span class="keyword">this</span>);</div><div class="line">        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>3.初始化对象</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> MediaPlayer mMediaPlayer;</div><div class="line"><span class="keyword">private</span> SurfaceView mPreview;</div><div class="line"><span class="keyword">private</span> SurfaceHolder holder;</div><div class="line"></div><div class="line">mPreview = (SurfaceView) findViewById(R.id.surface);</div><div class="line">holder = mPreview.getHolder();</div><div class="line">holder.addCallback(<span class="keyword">this</span>);</div><div class="line">holder.setFormat(PixelFormat.RGBA_8888);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>4.<strong>关键播放代码</strong></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">playVideo</span><span class="params">(String url)</span> </span>&#123;</div><div class="line">        </div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            <span class="comment">// Create a new media player and set the listeners</span></div><div class="line">            mMediaPlayer = <span class="keyword">new</span> MediaPlayer(<span class="keyword">this</span>);</div><div class="line">            mMediaPlayer.setDataSource(url);</div><div class="line">            mMediaPlayer.setDisplay(holder);</div><div class="line">            mMediaPlayer.prepareAsync();</div><div class="line">            mMediaPlayer.setOnBufferingUpdateListener(<span class="keyword">this</span>);</div><div class="line">            mMediaPlayer.setOnCompletionListener(<span class="keyword">this</span>);</div><div class="line">            mMediaPlayer.setOnPreparedListener(<span class="keyword">this</span>);</div><div class="line">            mMediaPlayer.setOnVideoSizeChangedListener(<span class="keyword">this</span>);</div><div class="line">            mMediaPlayer.setOnInfoListener(<span class="keyword">this</span>);</div><div class="line">            setVolumeControlStream(AudioManager.STREAM_MUSIC);</div><div class="line"></div><div class="line"></div><div class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</div><div class="line">            Log.e(TAG, <span class="string">"error: "</span> + e.getMessage(), e);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这里绑定了几个监听器，用来监听播放状态。</p>
+<p>MediaPlayer.OnSeekCompleteListener播放完毕监听:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSeekComplete</span><span class="params">(MediaPlayer mp)</span> </span>&#123;</div><div class="line">        mP.setVisibility(View.VISIBLE);</div><div class="line">        mDotView.setVisibility(View.INVISIBLE);</div><div class="line">        <span class="keyword">if</span>(mP.getText().equals(getResources().getString(R.string.暂停)))&#123;</div><div class="line">            mp.start();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>MediaPlayer.OnInfoListener缓冲监听:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onInfo</span><span class="params">(MediaPlayer arg0, <span class="keyword">int</span> arg1, <span class="keyword">int</span> arg2)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (arg1) &#123;</div><div class="line">            <span class="keyword">case</span> MediaPlayer.MEDIA_INFO_BUFFERING_START:</div><div class="line">                <span class="comment">//开始缓存，暂停播放</span></div><div class="line">                <span class="keyword">if</span> (arg0.isPlaying()) &#123;</div><div class="line">                    <span class="comment">//stopPlayer();</span></div><div class="line">                    arg0.pause();</div><div class="line">                    needResume = <span class="keyword">true</span>;</div><div class="line">                    <span class="comment">//如果是显示控制界面的时候,把播放键换成等待条</span></div><div class="line">                    <span class="keyword">if</span>(isControlling)&#123;</div><div class="line">                        mP.setVisibility(View.INVISIBLE);</div><div class="line">                    &#125;</div><div class="line">                        mDotView.setVisibility(View.VISIBLE);</div><div class="line"></div><div class="line">                &#125;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MediaPlayer.MEDIA_INFO_BUFFERING_END:</div><div class="line">                <span class="comment">//缓存完成，继续播放</span></div><div class="line">                <span class="keyword">if</span> (needResume)&#123;</div><div class="line">                    mDotView.setVisibility(View.INVISIBLE);</div><div class="line">                    <span class="keyword">if</span>(isControlling)&#123;</div><div class="line">                        <span class="keyword">if</span>(mP.getText().equals(getResources().getText(R.string.暂停)))&#123;</div><div class="line">                            mP.setVisibility(View.VISIBLE);</div><div class="line">                            arg0.start();</div><div class="line">                            needResume = <span class="keyword">false</span>;</div><div class="line">                        &#125;</div><div class="line">                    &#125;<span class="keyword">else</span>&#123;</div><div class="line">                        arg0.start();</div><div class="line">                        needResume = <span class="keyword">false</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                &#125;</div><div class="line"></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">case</span> MediaPlayer.MEDIA_INFO_DOWNLOAD_RATE_CHANGED:</div><div class="line">                <span class="comment">//显示 下载速度</span></div><div class="line">                Log.d(TAG, <span class="string">"download rate:"</span> + arg2);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>MediaPlayer.OnPreparedListener视频加载完毕监听,我在这里绑定了SeekBar（mTimeline）的实时进度控制，获取视频的长度，获取当前的播放进度<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onPrepared</span><span class="params">(MediaPlayer mediaplayer)</span> </span>&#123;</div><div class="line">        Log.d(TAG, <span class="string">"onPrepared called"</span>);</div><div class="line">        mIsVideoReadyToBePlayed = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">if</span> (mIsVideoReadyToBePlayed &amp;&amp; mIsVideoSizeKnown) &#123;</div><div class="line">            startVideoPlayback();</div><div class="line">        &#125;</div><div class="line">        mLength.setText(formatTime.formatTime(mMediaPlayer.getDuration()));</div><div class="line">        mTimeline.setMax(<span class="keyword">new</span> Long(mMediaPlayer.getDuration()).intValue());</div><div class="line">        mTimeline.setOnSeekBarChangeListener(<span class="keyword">new</span> SeekBar.OnSeekBarChangeListener() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgressChanged</span><span class="params">(SeekBar seekBar, <span class="keyword">int</span> i, <span class="keyword">boolean</span> b)</span> </span>&#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</div><div class="line"></div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">//进度条抬起事件</span></div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStopTrackingTouch</span><span class="params">(SeekBar seekBar)</span> </span>&#123;</div><div class="line">                mP.setVisibility(View.INVISIBLE);</div><div class="line">                mMediaPlayer.seekTo(seekBar.getProgress());</div><div class="line">                mCurrent.setText(formatTime.formatTime(<span class="keyword">new</span> Integer(seekBar.getProgress()).longValue()));</div><div class="line">                mDotView.setVisibility(View.VISIBLE);</div><div class="line">                isControllingTime = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line"></div><div class="line">        <span class="comment">//当前播放进度跟踪</span></div><div class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">while</span>(mMediaPlayer != <span class="keyword">null</span> )&#123;</div><div class="line">                    mHandler.post(<span class="keyword">new</span> Runnable() &#123;</div><div class="line">                        <span class="meta">@Override</span></div><div class="line">                        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">                            <span class="keyword">if</span>(mMediaPlayer != <span class="keyword">null</span> &amp;&amp; mMediaPlayer.isPlaying())&#123;</div><div class="line">                                mCurrent.setText(formatTime.formatTime(mMediaPlayer.getCurrentPosition()));</div><div class="line">                                mTimeline.setProgress(<span class="keyword">new</span> Long(mMediaPlayer.getCurrentPosition()).intValue());</div><div class="line">                            &#125;</div><div class="line">                        &#125;</div><div class="line">                    &#125;);</div><div class="line"></div><div class="line">                    <span class="keyword">try</span> &#123;</div><div class="line">                        Thread.sleep(<span class="number">1000</span>);</div><div class="line">                    &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">                        e.printStackTrace();</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;).start();</div><div class="line"></div><div class="line">      &#125;</div></pre></td></tr></table></figure></p>
+<p>获取当前播放进度：mMediaPlayer.getCurrentPosition();<br>暂停播放：mMediaPlayer.pause();<br>开始（继续）播放：mMediaPlayer.start();<br>是否正在播放：mMediaPlayer.isPlaying();</p>
+<p>最后奉上一个自己做的demo，其中Player.class是一个Activity是播放器的关键代码。</p>
+<p><img src="https://github.com/GreendaMi/movielineage/blob/master/mm2.gif&quot;&quot;" alt="movielineage"></p>
+<p><a href="https://github.com/GreendaMi/movielineage" target="_blank" rel="external">GitHub</a><strong>求关注，求点心！</strong></p>
+<p>&#160; &#160; &#160; &#160;Vitamio也是使用了FFmpeg开源项目，除了Vitamio，BiliBili家的<a href="https://github.com/Bilibili/ijkplayer" target="_blank" rel="external">ijkplayer</a>有兴趣的也可以了解一下。</p>
+</the>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/">Android鬼点子-Vitamio视频播放框架一篇就入门</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
+        <p><span>发布时间:</span>2016-12-04, 20:20:36</p>
+        <p><span>最后更新:</span>2016-12-04, 21:26:03</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/" title="Android鬼点子-Vitamio视频播放框架一篇就入门">http://greendami.top/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/11/28/Adnroid鬼点子-自定义Seek控制条/">
+                    Adnroid鬼点子-自定义Seek控制条
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Android鬼点子-Vitamio视频播放框架一篇就入门　| GreendaMi'Blog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/" data-title="Android鬼点子-Vitamio视频播放框架一篇就入门" data-url="http://greendami.top/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"http://greendami.duoshuo.com"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+    </script>
+    
+    <script> loadComment(); </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/11/28/Adnroid鬼点子-自定义Seek控制条/" title="下一篇: Adnroid鬼点子-自定义Seek控制条">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/12/04/Android鬼点子-Vitamio视频播放框架一篇就入门/">Android鬼点子-Vitamio视频播放框架一篇就入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/28/Adnroid鬼点子-自定义Seek控制条/">Adnroid鬼点子-自定义Seek控制条</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/23/Android鬼点子-引入第三方依赖的无痛指南/">Android鬼点子-引入第三方依赖的无痛指南</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/22/Android鬼点子-代码混淆/">Android鬼点子-代码混淆</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/31/Android鬼点子-Activity的隐式调用/">Android鬼点子-Activity的隐式调用</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/20/Android鬼点子-探索View的实例化过程/">Android鬼点子-探索View的实例化过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/14/Android鬼点子-使用Espresso进行UI测试/">Android鬼点子-使用Espresso进行UI测试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/07/Android鬼点子-使用ViewStub进行延迟加载/">Android鬼点子-使用ViewStub进行延迟加载</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/03/Android鬼点子-View的事件分发机制/">Android鬼点子-View的事件分发机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/24/Android鬼点子-上手自定义View/">Android鬼点子-上手自定义View</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 GreendaMi
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" title="本站到访数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>| </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    // Open in New Window
+    
+        var oOpenInNew = {
+            
+            
+            
+            
+            
+            
+             archives: ".archive-article-title", 
+             miniArchives: "a.post-list-link", 
+            
+             friends: "#js-friends a", 
+             socail: ".social a" 
+        }
+        for (var x in oOpenInNew) {
+            $(oOpenInNew[x]).attr("target", "_blank");
+        }
+    
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
