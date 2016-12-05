@@ -23,7 +23,7 @@
 <meta property="og:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;用于显示Wifi状态的视图，分为连接中，连接成功，和连接失败。可以设定视图宽度（高度自动计算），前景色和背景色。！">
 <meta property="og:image" content="https://github.com/GreendaMi/WifiState/blob/master/preview%5B3%5D.gif?raw=true">
 <meta property="og:image" content="https://github.com/GreendaMi/WifiState/blob/master/wifi2.gif?raw=true">
-<meta property="og:updated_time" content="2016-12-05T09:03:44.809Z">
+<meta property="og:updated_time" content="2016-12-05T09:10:08.442Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android鬼点子-自定义的Wifi状态视图">
 <meta name="twitter:description" content="&amp;#160; &amp;#160; &amp;#160; &amp;#160;用于显示Wifi状态的视图，分为连接中，连接成功，和连接失败。可以设定视图宽度（高度自动计算），前景色和背景色。！">
@@ -323,6 +323,7 @@
 <p>引入依赖：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">allprojects &#123;</div><div class="line">		repositories &#123;</div><div class="line">			...</div><div class="line">			maven &#123; url &apos;https://jitpack.io&apos; &#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">  </div><div class="line"> dependencies &#123;</div><div class="line">	        compile &apos;com.github.GreendaMi:WifiState:1,0&apos;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
 <p>xml中使用<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">top.greendami.wifistate.WifiState</span></span></div><div class="line">    <span class="attr">android:id</span>=<span class="string">"@+id/wifiState"</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"300dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"300dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"#00000000"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure></p>
 <p>java代码<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mWifiState =(WifiState) findViewById(R.id.wifiState);</div><div class="line"><span class="comment">//设置状态</span></div><div class="line">mWifiState.setSTATE(WifiState.STATE.OK);</div><div class="line">mWifiState.setSTATE(WifiState.STATE.LOADING);</div><div class="line">mWifiState.setSTATE(WifiState.STATE.ERROR);</div></pre></td></tr></table></figure></p>
+<p>-&gt;&gt;&gt;<a href="https://github.com/GreendaMi/WifiState" target="_blank" rel="external">GitHub</a>&lt;&lt;&lt;-   求点心，求按赞！！！</p>
 </the>
       
     </div>
@@ -334,7 +335,7 @@
         <p><span>本文标题:</span><a href="/2016/12/05/Android鬼点子-自定义的Wifi状态视图/">Android鬼点子-自定义的Wifi状态视图</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">GreendaMi</a></p>
         <p><span>发布时间:</span>2016-12-05, 16:59:14</p>
-        <p><span>最后更新:</span>2016-12-05, 17:03:44</p>
+        <p><span>最后更新:</span>2016-12-05, 17:10:08</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2016/12/05/Android鬼点子-自定义的Wifi状态视图/" title="Android鬼点子-自定义的Wifi状态视图">http://greendami.top/2016/12/05/Android鬼点子-自定义的Wifi状态视图/</a>
             <span class="copy-path" data-clipboard-text="原文: http://greendami.top/2016/12/05/Android鬼点子-自定义的Wifi状态视图/　　作者: GreendaMi" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
